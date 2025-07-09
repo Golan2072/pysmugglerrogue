@@ -1,6 +1,6 @@
-# pysmugglerredux
-CLI textual space trading and adventure game
-PySmuggler Redux
+# pysmugglerrogue
+CLI textual space trading and adventure game with Roguelike elements
+PySmuggler
 
 v0.01
-Initial code - basic starmap renderer only. Very partial.
+Initial code - basic menu system and starmap; jump logic implemented as well. Very partial.
