@@ -51,6 +51,21 @@ def getkeypress():
         key = Getch()
         return key()
 
+def yn():
+    while True:
+        print("please press Y to confirm or N to cancel")
+        try:
+            keypress = getkeypress()
+            if str(keypress).upper() == "Y":
+                return True
+                break
+            elif str(keypress).upper() == "N":
+                return False
+                break
+            else:
+                print("Invalid choice")
+        except UnicodeDecodeError:
+                choice = None
 
 def clear_screen():
     if platform.system() == "Windows":
@@ -151,8 +166,18 @@ class Game_screen:
         print("-"*50)
         print(self.menu_string)
         print("-"*50)
+        print(f"Current Terran Credits {self.game.character.credits}")
         print()
 
+    def purchase(self, cost):
+        if self.game.character.credits >= cost:
+            self.game.character.credits -= cost
+            return True
+        else:
+            print("insufficient credits")
+            input("Press Enter to continue")
+            return False
+    
     def main_menu(self):
         menu = Main_screen(self.game)
         menu.menu()
@@ -301,10 +326,34 @@ class Shipyard_screen (Game_screen):
     def __init__(self, game):
         super().__init__(game)
         self.screen_title = "\u001b[32mMarket Screen"
+        self.particular_menu_options = {"F": ("Refuel", self.refuel)}
 
     def render_screen(self):
         self.render_general_features()
-        print("Shipyard")
+        print("Shipyard and Fuel Depot")
+        print(f"Fuel {self.game.starship.current_fuel} tons out of {self.game.starship.max_fuel} tons")
+        print (f"Refuel cost {50*(self.game.starship.max_fuel - self.game.starship.current_fuel)} Terran Credits")
+        
+    def refuel(self):
+        cost = 50*(self.game.starship.max_fuel - self.game.starship.current_fuel)
+        print(f"Refuel cost {cost}, proceed?")
+        choice = yn()
+        if choice:
+            if self.game.starship.current_fuel == self.game.starship.max_fuel:
+                print("Fuel tank already full!")
+                input("Press Enter to continue")
+                self.menu()
+            elif self.purchase(cost):
+                self.game.starship.current_fuel = self.game.starship.max_fuel
+                print ("Ship Refueled")
+                input("Press Enter to continue")
+                self.menu()
+            else:
+                pass
+        else:
+            print("Refeul cancelled.")
+            input("Press Enter to continue")
+            self.menu()
 
 class Character_screen (Game_screen):
     def __init__(self, game):
