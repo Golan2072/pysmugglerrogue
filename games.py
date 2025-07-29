@@ -44,7 +44,7 @@ def sector_gen():
 
 class Game:
     def __init__(self, starmap):
-        self.version = 0.01
+        self.version = 0.02
         self.far_future = date(2999, 12, 21)
         self.character = Character()
         self.starmap = starmap

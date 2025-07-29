@@ -281,7 +281,7 @@ class Navigation_screen (Game_screen):
 
     def render_screen(self):
         self.render_general_features()
-        print(f"Fuel: {self.game.starship.current_fuel} tons, sufficient for {self.game.starship.current_fuel/self.game.starship.fuel_per_parsec} Parsecs; Maximum FTL Range {self.game.starship.ftl_rating} Parsecs")
+        print(f"Fuel: {self.game.starship.current_fuel} tons, sufficient for {self.game.starship.current_fuel/self.game.starship.fuel_per_parsec} Parsecs;\nMaximum FTL Range {self.game.starship.ftl_rating} Parsecs")
         print(self.render_starmap())
 
     def render_starmap(self):
